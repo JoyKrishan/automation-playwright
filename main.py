@@ -6,7 +6,6 @@ from therap_modules.tlog_therap import TLog
 from therap_modules.login_therap import Login
 from browser_init import BrowserIntializer
 from csv_reader_therap import LOGIN_SHEET, ExcelValueGetter, SITE_SHEET, PROGRAM_SHEET, TLOG_SHEET
-from tlog_to_excel import ToExcel
 
 URL = 'https://qa01.therapbd.net/'
 
@@ -26,24 +25,24 @@ with sync_playwright() as playwright:
     # Skip Personal details
     Dashboard.skip_personal_details(page1)
 
-    site_values = ExcelValueGetter(SITE_SHEET)
-    for row in range(site_values.get_total_rows()):  # 1
-        # Create a Site
-        site1 = Site(page1)
-        site1.fill_input(name=site_values.get_value_wrt_col_row('name', row))
-        site1.fill_selectors(tz=site_values.get_value_wrt_col_row(
-            'timezone', row), state=site_values.get_value_wrt_col_row('state', row))
-        site1.save()
-        Dashboard.goto(page1)
+    # site_values = ExcelValueGetter(SITE_SHEET)
+    # for row in range(site_values.get_total_rows()):  # 1
+    #     # Create a Site
+    #     site1 = Site(page1)
+    #     site1.fill_input(name=site_values.get_value_wrt_col_row('name', row))
+    #     site1.fill_selectors(tz=site_values.get_value_wrt_col_row(
+    #         'timezone', row), state=site_values.get_value_wrt_col_row('state', row))
+    #     site1.save()
+    #     Dashboard.goto(page1)
 
     program_values = ExcelValueGetter(PROGRAM_SHEET)
     for row in range(program_values.get_total_rows()):
         # Create a Program
         program1 = Program(page1)
-        program1.fill_input(name=program_values.get_value_wrt_col_row(
-            'name', row), rdid=program_values.get_value_wrt_col_row('programID', row))
+        program1.fill_input(name = program_values.get_value_wrt_col_row(
+            'name', row), rdid = program_values.get_value_wrt_col_row('programID', row))
         program1.fill_selectors(
-            programType='15 min. units', site=program_values.get_value_wrt_col_row('site'))
+            programType='15 min. units', site=program_values.get_value_wrt_col_row('site', row))
         program1.save()
         Dashboard.goto(page1)
 
@@ -55,12 +54,5 @@ with sync_playwright() as playwright:
         tlog1 = TLog(page1)
         tlog1.create(tlog_type=tlog_values.get_value_wrt_col_row('T-log type', row).split(","), lastName=tlog_values.get_value_wrt_col_row(
             'Individual search name', row), summary=tlog_values.get_value_wrt_col_row("Summary", row), description=tlog_values.get_value_wrt_col_row("Description", row))
-
-    # # scrape data from T-log to excel
-    # Dashboard.click_on_individual_tab(page1)
-    # tlog_scrape = TLog(page1)
-    # tlog_scrape.searchAll()
-    # html = page1.inner_html("#pageContent")
-    # tlog_xls = ToExcel(html)
-    # print(tlog_xls.find_with_tags('td'))
-
+        
+    
