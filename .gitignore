@@ -1,3 +1,6 @@
 my_env/
- __pycache__/
+__pycache__/
+__pycache__/*
 therap_modules/__pycache__/
+*.png
+Book1.xls

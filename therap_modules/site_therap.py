@@ -24,9 +24,6 @@ class Site:
         self.page.click("input[type='submit']")
         self.page.wait_for_load_state()
         self.page.click("button.btn-prompt-yes")
-        self.page.screenshot(path='screenshot3.png')
     
     def get_site_name(self):
         return self.site_name
-    
-    

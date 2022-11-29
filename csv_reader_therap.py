@@ -6,7 +6,6 @@ LOGIN_SHEET = pd.read_excel(XLS, 'Login')
 SITE_SHEET = pd.read_excel(XLS, 'Site')
 PROGRAM_SHEET = pd.read_excel(XLS, 'Program')
 TLOG_SHEET = pd.read_excel(XLS, 'T-Log')
-
 class ExcelValueGetter:
     df = None
 
@@ -14,10 +13,9 @@ class ExcelValueGetter:
         self.df = df
 
     def get_total_rows(self) -> int:
-        print(self.df.count().values[0])
         return self.df.count().values[0]
 
-    def get_value_wrt_col_row(self, colName, rowNo):
+    def get_value_wrt_col_row(self, colName, rowNo) -> str:
         return self.df[colName].iloc[rowNo]
 
     def get_first_value_wrt_col(self, colName):
