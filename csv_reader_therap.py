@@ -4,7 +4,7 @@ from pandas import DataFrame
 XLS = pd.ExcelFile('Book1.xls')
 LOGIN_SHEET = pd.read_excel(XLS, 'Login')
 SITE_SHEET = pd.read_excel(XLS, 'Site')
-PROGRAM_SHEET = pd.read_excel(XLS, 'Program')
+PROGRAM_SHEET = pd.read_excel(XLS, 'Program', dtype=str)
 TLOG_SHEET = pd.read_excel(XLS, 'T-Log')
 class ExcelValueGetter:
     df = None
